@@ -33,9 +33,19 @@ router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
         res.status(500).json(err)
     }
 })
+// //GET ALL
+
+router.get('/', verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const orders = await OrderModel.find();
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
 
 //GET USER ORDERS
-router.get('/find/:userId', verifyTokenAndAdmin,async (req, res) => {
+router.get('/find/:userId', verifyTokenAndAdmin, async (req, res) => {
     try {
         const orders = await OrderModel.find({userId: req.params.userId});
         res.status(200).json(orders)
@@ -46,31 +56,36 @@ router.get('/find/:userId', verifyTokenAndAdmin,async (req, res) => {
 
 //GET MONTHLY INCOME
 router.get('/income', verifyTokenAndAdmin, async (req, res) => {
-const date = new Date();
-const lastMonth = new Date(date.setMonth(date.getMonth()-1));
-const previousMonth = new Date(date.setMonth(lastMonth.getMonth()-1));
-console.log('here')
-try{
-    const income = await OrderModel.aggregate([
-        {$match: {createdAt: {$gte: previousMonth}}},
-        {
-            $project: {
-                month: {$month: "$createdAt"},
-                sales: "$amount",
+    const productId = req.query.pid;
+
+    const date = new Date();
+    const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
+    const previousMonth = new Date(date.setMonth(lastMonth.getMonth() - 1));
+    console.log('here')
+    try {
+        const income = await OrderModel.aggregate([
+            {$match: {createdAt: {$gte: previousMonth}, ...(productId && {
+                products: {$elemMatch: {productId}}
+                    })
+            }},
+            {
+                $project: {
+                    month: {$month: "$createdAt"},
+                    sales: "$amount",
+                }
+            },
+            {
+                $group: {
+                    _id: "$month",
+                    total: {$sum: "$sales"}
+                }
             }
-        },
-        {
-            $group: {
-                _id: "$month",
-                total: {$sum: "$sales"}
-            }
-        }
-    ]);
-    console.log('income', income);
-    res.status(200).json(income);
-}catch(err){
-    res.status(500).json(err)
-}
+        ]);
+        console.log('income', income);
+        res.status(200).json(income);
+    } catch (err) {
+        res.status(500).json(err)
+    }
 })
 
 module.exports = router

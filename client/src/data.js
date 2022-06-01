@@ -27,16 +27,19 @@ export const categories = [
         id: 1,
         img:"https://image.made-in-china.com/202f0j00dmBlCEePlTkM/New-Fashion-Women-A-Line-Mini-Sexy-Deep-V-Neck-Short-Sleeve-Loose-Shirt-Style-Dress-Ruffle-Flare-Sleeve-Casual-Dress-Summer-Boho-Lady-Dresses.jpg",
         title: "SHIRT STYLE!",
+        cat: "woman"
     },
     {
         id: 2,
         img: "https://i.pinimg.com/736x/1d/b3/42/1db342f67053eaa6528c83810771b4b0.jpg",
         title: "LOUNGEWEAR LOVE",
+        cat: "coat"
     },
     {
         id: 3,
         img: "https://i.pinimg.com/736x/1f/13/56/1f13566ff1a53027b45348ef4d0419aa.jpg",
         title: "LIGHT JACKETS",
+        cat: "jeans"
     },
 ];
 
@@ -44,14 +47,17 @@ export const popularProducts = [
     {
         id:1,
         img:"https://d3o2e4jr3mxnm3.cloudfront.net/Mens-Jake-Guitar-Vintage-Crusher-Tee_68382_1_lg.png",
+
     },
     {
         id:2,
         img:"https://cottonbureau.imgix.net/products/originals/43011_eBhx.png?auto=format&bg=FFF&fit=max&fm=pjpg&ixlib=php-3.3.1&w=1200",
+
     },
     {
         id:3,
         img:"https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png",
+
     },
     {
         id:4,
